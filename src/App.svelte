@@ -1,5 +1,6 @@
 <script>
-	export let name;
+	import { _, isLoading, locale } from 'svelte-i18n';
+
 	let weight = 150;
 	let windSpeed = 15;
 	let recommendedKiteSize = null;
@@ -37,45 +38,57 @@
 		const windSpeedIndex = findWindSpeedIndex(windSpeed);
 		recommendedKiteSize = closestWeight.sizes[windSpeedIndex];
 	}
+
+	function switchLanguage() {
+		locale.set($locale === 'en' ? 'es' : 'en');
+	}
 </script>
 
-<main>
-	<h1>Welcome to the Kite Calculator!</h1>
-	<p>Find the perfect kite size and get on the water!</p>
-	
-	<div class="input-container">
-		<label>
-			Weight (lbs):
-			<div class="input-wrapper">
-				<input type="number" bind:value={weight} min="0" step="10">
-				<div class="input-arrows">
-					<button class="arrow-up" on:click={() => weight += 10}>▲</button>
-					<button class="arrow-down" on:click={() => weight -= 10}>▼</button>
+{#if !$isLoading}
+	<main>
+		<div class="language-switcher">
+			<button on:click={switchLanguage}>
+				{$locale === 'en' ? 'Español' : 'English'}
+			</button>
+		</div>
+
+		<h1>{$_('title')}</h1>
+		<p>{$_('subtitle')}</p>
+		
+		<div class="input-container">
+			<label>
+				{$_('weight')}:
+				<div class="input-wrapper">
+					<input type="number" bind:value={weight} min="0" step="10">
+					<div class="input-arrows">
+						<button class="arrow-up" on:click={() => weight += 10}>▲</button>
+						<button class="arrow-down" on:click={() => weight -= 10}>▼</button>
+					</div>
 				</div>
-			</div>
-		</label>
-		<label>
-			Wind Speed (mph):
-			<div class="input-wrapper">
-				<input type="number" bind:value={windSpeed} min="0" step="1">
-				<div class="input-arrows">
-					<button class="arrow-up" on:click={() => windSpeed += 1}>▲</button>
-					<button class="arrow-down" on:click={() => windSpeed -= 1}>▼</button>
+			</label>
+			<label>
+				{$_('windSpeed')}:
+				<div class="input-wrapper">
+					<input type="number" bind:value={windSpeed} min="0" step="1">
+					<div class="input-arrows">
+						<button class="arrow-up" on:click={() => windSpeed += 1}>▲</button>
+						<button class="arrow-down" on:click={() => windSpeed -= 1}>▼</button>
+					</div>
 				</div>
-			</div>
-		</label>
-		<button on:click={calculateKiteSize} class="cloud-button">
-			Calculate
-		</button>
-	</div>
-	<div class="image-container">
-		<img src="/images/kiter.png" alt="Kiteboarder" class="kiter-image">
-	</div>
-	
-	{#if recommendedKiteSize !== null}
-		<p class="result">Recommended kite size: {recommendedKiteSize} m²</p>
-	{/if}
-</main>
+			</label>
+			<button on:click={calculateKiteSize} class="cloud-button">
+				{$_('calculate')}
+			</button>
+		</div>
+		<div class="image-container">
+			<img src="/images/kiter.png" alt="Kiteboarder" class="kiter-image">
+		</div>
+		
+		{#if recommendedKiteSize !== null}
+			<p class="result">{$_('result', { values: { size: recommendedKiteSize } })}</p>
+		{/if}
+	</main>
+{/if}
 
 <style>
 	:global(body) {
@@ -106,6 +119,26 @@
 		position: relative;
 		z-index: 1;
 		border-radius: 10px;
+	}
+
+	.language-switcher {
+		position: fixed;
+		top: 10px;
+		left: 10px;
+	}
+
+	.language-switcher button {
+		margin-left: 5px;
+		padding: 5px 10px;
+		background-color: #ffffff;
+		border: 1px solid #008080;
+		border-radius: 4px;
+		cursor: pointer;
+	}
+
+	.language-switcher button:hover {
+		background-color: #008080;
+		color: #ffffff;
 	}
 
 	h1 {
@@ -140,13 +173,20 @@
 	}
 
 	input[type="number"] {
-		width: 100px;
+		width: 80px;
 		padding: 0.5em;
 		margin-top: 0.5em;
 		border: 2px solid #008080;
 		border-radius: 4px;
 		background-color: rgba(255, 255, 255, 0.8);
+		text-align: center;
 	}
+
+	input[type="number"]::-webkit-outer-spin-button,
+    input[type="number"]::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
 
 	.input-wrapper {
         display: flex;
@@ -156,16 +196,35 @@
     .input-arrows {
         display: flex;
         flex-direction: column;
-        margin-left: 5px;
+        margin-left: 2px;
+		margin-top: 0.4em;
     }
 
     .arrow-up, .arrow-down {
-        padding: 2px 5px;
+        padding: 0;
         font-size: 12px;
+        width: 18px;
+        height: 18px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: 1px solid #ccc;
+        background-color: #ffffff;
+        cursor: pointer;
+        border-radius: 50%;
+		font-family: Arial, sans-serif;  /* Specify a consistent font */
         line-height: 1;
     }
 
-	.cloud-button {
+    .arrow-up:hover, .arrow-down:hover {
+        background-color: #e0e0e0;
+    }
+
+    .arrow-up {
+        margin-bottom: 2px;
+    }
+
+    .cloud-button {
         background-color: #ffffff;
         color: #4a4a4a;
         border: none;
@@ -192,7 +251,7 @@
         width: 50%;
         height: 50%;
         top: -5px;
-		left: 8px;
+        left: 8px;
     }
 
     .cloud-button::after {
@@ -200,7 +259,7 @@
         height: 30%;
         top: 38px;
         right: 14px;
-		z-index: 1;
+        z-index: 1;
     }
 
     .cloud-button:hover {
@@ -208,31 +267,31 @@
         box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
     }
 
-	.result {
-		font-size: 1.5em;
-		font-weight: bold;
-		color: #ffffff;
-		margin-top: 0.87em;
-		text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
-	}
+    .result {
+        font-size: 1.5em;
+        font-weight: bold;
+        color: #ffffff;
+        margin-top: 0.87em;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+    }
 
-	.image-container {
-		position: absolute;
-		top: 50%;
-		left: 50%;
-		transform: translate(-50%, -50%);
-		z-index: -1;
-	}
-	.kiter-image {
-		width: 20rem;
-		bottom:1rem;
-		left: 2rem;
-		transform: translateY(40%) translateX(100%);
-	}
+    .image-container {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: -1;
+    }
+    .kiter-image {
+        width: 20rem;
+        bottom:1rem;
+        left: 2rem;
+        transform: translateY(40%) translateX(100%);
+    }
 
-	@media (min-width: 640px) {
-		main {
-			max-width: none;
-		}
-	}
+    @media (min-width: 640px) {
+        main {
+            max-width: none;
+        }
+    }
 </style>
