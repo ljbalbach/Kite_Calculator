@@ -1,0 +1,238 @@
+<script>
+	export let name;
+	let weight = 150;
+	let windSpeed = 15;
+	let recommendedKiteSize = null;
+
+	function calculateKiteSize() {
+		// Placeholder for calculation logic
+		const kiteSizeChart = [
+			{ weight: 95, sizes: [3, 3, 4, 4, 5, 5, 5, 6, 6, 7, 7, 8] },
+			{ weight: 110, sizes: [3, 4, 4, 5, 5, 6, 7, 7, 8, 8, 9, 9] },
+			{ weight: 125, sizes: [4, 5, 5, 6, 6, 7, 8, 8, 9, 8, 10, 11] },
+			{ weight: 140, sizes: [4, 5, 6, 7, 7, 8, 9, 9, 10, 11, 12, 12] },
+			{ weight: 155, sizes: [5, 6, 7, 7, 8, 9, 10, 11, 11, 12, 13, 14] },
+			{ weight: 170, sizes: [6, 6, 7, 8, 9, 10, 11, 12, 13, 14, 14, 15] },
+			{ weight: 185, sizes: [6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17] },
+			{ weight: 200, sizes: [7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18] },
+			{ weight: 215, sizes: [7, 8, 10, 11, 12, 13, 14, 15, 16, 18, 19, 20] },
+			{ weight: 230, sizes: [8, 9, 10, 12, 13, 14, 15, 16, 18, 19, 20, 21] },
+			{ weight: 245, sizes: [8, 10, 11, 12, 14, 15, 16, 18, 19, 20, 22, 23] },
+			{ weight: 260, sizes: [9, 10, 12, 13, 15, 16, 17, 19, 20, 22, 23, 24] }
+		];
+
+		const windSpeedRanges = [39, 32, 28, 24, 22, 20, 17, 16, 15, 14, 13, 12];
+
+		function findClosestWeight(weight) {
+			return kiteSizeChart.reduce((prev, curr) => 
+				Math.abs(curr.weight - weight) < Math.abs(prev.weight - weight) ? curr : prev
+			);
+		}
+
+		function findWindSpeedIndex(windSpeed) {
+			return windSpeedRanges.findIndex(speed => windSpeed >= speed);
+		}
+
+		const closestWeight = findClosestWeight(weight);
+		const windSpeedIndex = findWindSpeedIndex(windSpeed);
+		recommendedKiteSize = closestWeight.sizes[windSpeedIndex];
+	}
+</script>
+
+<main>
+	<h1>Welcome to the Kite Calculator!</h1>
+	<p>Find the perfect kite size and get on the water!</p>
+	
+	<div class="input-container">
+		<label>
+			Weight (lbs):
+			<div class="input-wrapper">
+				<input type="number" bind:value={weight} min="0" step="10">
+				<div class="input-arrows">
+					<button class="arrow-up" on:click={() => weight += 10}>▲</button>
+					<button class="arrow-down" on:click={() => weight -= 10}>▼</button>
+				</div>
+			</div>
+		</label>
+		<label>
+			Wind Speed (mph):
+			<div class="input-wrapper">
+				<input type="number" bind:value={windSpeed} min="0" step="1">
+				<div class="input-arrows">
+					<button class="arrow-up" on:click={() => windSpeed += 1}>▲</button>
+					<button class="arrow-down" on:click={() => windSpeed -= 1}>▼</button>
+				</div>
+			</div>
+		</label>
+		<button on:click={calculateKiteSize} class="cloud-button">
+			Calculate
+		</button>
+	</div>
+	<div class="image-container">
+		<img src="/images/kiter.png" alt="Kiteboarder" class="kiter-image">
+	</div>
+	
+	{#if recommendedKiteSize !== null}
+		<p class="result">Recommended kite size: {recommendedKiteSize} m²</p>
+	{/if}
+</main>
+
+<style>
+	:global(body) {
+		margin: 0;
+		padding: 0;
+		height: 100vh;
+		display: flex;
+		flex-direction: column;
+		overflow: hidden;
+		background-image: url('/images/beach.jpeg');
+		background-size: 1920px auto; /* Fixed width of 1920px, height auto */
+		background-position: center;
+		background-repeat: no-repeat;
+		background-attachment: fixed; /* Keep the background fixed while scrolling */
+		font-family: 'Comic Sans MS', cursive;
+	}
+
+	main {
+		text-align: center;
+		padding: 2em;
+		max-width: 100%;
+		margin: 0 auto;
+		flex-grow: 1;
+		display: flex;
+		flex-direction: column;
+		justify-content: flex-start;
+		align-items: center;
+		position: relative;
+		z-index: 1;
+		border-radius: 10px;
+	}
+
+	h1 {
+		color: #ffffff; /* White */
+		text-transform: uppercase;
+		font-size: 3em;
+		font-weight: bold;
+	}
+
+	p {
+		color: #ffffff;
+		font-size: 1.2em;
+		margin-top: 1em;
+		text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+	}
+
+	.input-container {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		margin-top: 2em;
+	}
+
+	label {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		margin-bottom: 1em;
+		font-weight: bold;
+		color: #ffffff;
+		text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+	}
+
+	input[type="number"] {
+		width: 100px;
+		padding: 0.5em;
+		margin-top: 0.5em;
+		border: 2px solid #008080;
+		border-radius: 4px;
+		background-color: rgba(255, 255, 255, 0.8);
+	}
+
+	.input-wrapper {
+        display: flex;
+        align-items: center;
+    }
+
+    .input-arrows {
+        display: flex;
+        flex-direction: column;
+        margin-left: 5px;
+    }
+
+    .arrow-up, .arrow-down {
+        padding: 2px 5px;
+        font-size: 12px;
+        line-height: 1;
+    }
+
+	.cloud-button {
+        background-color: #ffffff;
+        color: #4a4a4a;
+        border: none;
+        padding: 0.8em 1.5em;
+        font-size: 1em;
+        font-weight: bold;
+        cursor: pointer;
+        position: relative;
+        transition: all 0.3s ease;
+        border-radius: 20px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .cloud-button::before,
+    .cloud-button::after {
+        content: '';
+        position: absolute;
+        background-color: #ffffff;
+        border-radius: 50%;
+        z-index: -1;
+    }
+
+    .cloud-button::before {
+        width: 50%;
+        height: 50%;
+        top: -5px;
+		left: 8px;
+    }
+
+    .cloud-button::after {
+        width: 60%;
+        height: 30%;
+        top: 38px;
+        right: 14px;
+		z-index: 1;
+    }
+
+    .cloud-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+    }
+
+	.result {
+		font-size: 1.5em;
+		font-weight: bold;
+		color: #ffffff;
+		margin-top: 0.87em;
+		text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+	}
+
+	.image-container {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		z-index: -1;
+	}
+	.kiter-image {
+		width: 20rem;
+		bottom:1rem;
+		left: 2rem;
+		transform: translateY(40%) translateX(100%);
+	}
+
+	@media (min-width: 640px) {
+		main {
+			max-width: none;
+		}
+	}
+</style>
