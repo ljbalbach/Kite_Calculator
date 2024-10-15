@@ -3,7 +3,7 @@
 
 	let weight = 150;
 	let windSpeed = 15;
-	let recommendedKiteSize = null;
+	let recommendedKiteSize = 11;
 
 	function calculateKiteSize() {
 		if (windSpeed > 50) {
@@ -93,9 +93,7 @@
 			{/if}
 		</main>
 		<div class="image-container">
-			{#if recommendedKiteSize === null}
-				<img src="./images/kiter_12.png" alt="Kiteboarder" class="kiter-image">
-			{:else if recommendedKiteSize <= 5}
+			{#if recommendedKiteSize <= 5}
 				<img src="./images/kiter_3.png" alt="Kiteboarder" class="kiter-image">
 			{:else if recommendedKiteSize <= 9}
 				<img src="./images/kiter_7.png" alt="Kiteboarder" class="kiter-image">
@@ -105,6 +103,8 @@
 				<img src="./images/kiter_18.png" alt="Kiteboarder" class="kiter-image">
 			{:else if recommendedKiteSize > 20}
 				<img src="./images/kiter_24.png" alt="Kiteboarder" class="kiter-image">
+			{:else}
+				<img src="./images/kiter_12.png" alt="Kiteboarder" class="kiter-image">
 			{/if}
 		</div>
 	</div>
