@@ -87,17 +87,17 @@
 		</div>
 		<div class="image-container">
 			{#if recommendedKiteSize === null}
-				<img src="/images/kiter_12.png" alt="Kiteboarder" class="kiter-image">
+				<img src="./images/kiter_12.png" alt="Kiteboarder" class="kiter-image">
 			{:else if recommendedKiteSize <= 5}
-				<img src="/images/kiter_3.png" alt="Kiteboarder" class="kiter-image">
+				<img src="./images/kiter_3.png" alt="Kiteboarder" class="kiter-image">
 			{:else if recommendedKiteSize <= 9}
-				<img src="/images/kiter_7.png" alt="Kiteboarder" class="kiter-image">
+				<img src="./images/kiter_7.png" alt="Kiteboarder" class="kiter-image">
 			{:else if recommendedKiteSize <= 15}
-				<img src="/images/kiter_12.png" alt="Kiteboarder" class="kiter-image">
+				<img src="./images/kiter_12.png" alt="Kiteboarder" class="kiter-image">
 			{:else if recommendedKiteSize <= 20}
-				<img src="/images/kiter_18.png" alt="Kiteboarder" class="kiter-image">
+				<img src="./images/kiter_18.png" alt="Kiteboarder" class="kiter-image">
 			{:else if recommendedKiteSize > 20}
-				<img src="/images/kiter_24.png" alt="Kiteboarder" class="kiter-image">
+				<img src="./images/kiter_24.png" alt="Kiteboarder" class="kiter-image">
 			{/if}
 		</div>
 		
@@ -117,7 +117,7 @@
 		display: flex;
 		flex-direction: column;
 		overflow: hidden;
-		background-image: url('/images/beach.jpeg');
+		background-image: url('./images/beach.jpeg');
 		background-size: 1920px auto; /* Fixed width of 1920px, height auto */
 		background-position: center;
 		background-repeat: no-repeat;
