@@ -1,0 +1,9 @@
+{
+    "title": "¡Bienvenido a la Calculadora de Cometas!",
+    "subtitle": "¡Encuentra el tamaño perfecto de cometa y ve al agua!",
+    "weight": "Peso (lbs)",
+    "windSpeed": "Velocidad del viento (mph)",
+    "calculate": "Calcular",
+    "result": "Tamaño de cometa recomendado: {size} m²",
+    "result_no_kite": "¡Deberías considerar utilizar una tabla de windsurf en estas condiciones!"
+}

@@ -1,0 +1,9 @@
+{
+    "title": "Welcome to the Kite Calculator!",
+    "subtitle": "Find the perfect kite size and get on the water!",
+    "weight": "Weight (lbs)",
+    "windSpeed": "Wind Speed (mph)",
+    "calculate": "Calculate",
+    "result": "Recommended kite size: {size} m²",
+    "result_no_kite": "You should consider using a windsurfer in these conditions!"
+}

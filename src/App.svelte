@@ -6,6 +6,10 @@
 	let recommendedKiteSize = null;
 
 	function calculateKiteSize() {
+		if (windSpeed > 50) {
+			recommendedKiteSize = -1;
+			return;
+		}
 		// Placeholder for calculation logic
 		const kiteSizeChart = [
 			{ weight: 95, sizes: [3, 3, 4, 4, 5, 5, 5, 6, 6, 7, 7, 8] },
@@ -31,7 +35,8 @@
 		}
 
 		function findWindSpeedIndex(windSpeed) {
-			return windSpeedRanges.findIndex(speed => windSpeed >= speed);
+			const index = windSpeedRanges.findIndex(speed => windSpeed >= speed);
+			return index === -1 ? windSpeedRanges.length - 1 : index;
 		}
 
 		const closestWeight = findClosestWeight(weight);
@@ -81,11 +86,25 @@
 			</button>
 		</div>
 		<div class="image-container">
-			<img src="/images/kiter.png" alt="Kiteboarder" class="kiter-image">
+			{#if recommendedKiteSize === null}
+				<img src="/images/kiter_12.png" alt="Kiteboarder" class="kiter-image">
+			{:else if recommendedKiteSize <= 5}
+				<img src="/images/kiter_3.png" alt="Kiteboarder" class="kiter-image">
+			{:else if recommendedKiteSize <= 9}
+				<img src="/images/kiter_7.png" alt="Kiteboarder" class="kiter-image">
+			{:else if recommendedKiteSize <= 15}
+				<img src="/images/kiter_12.png" alt="Kiteboarder" class="kiter-image">
+			{:else if recommendedKiteSize <= 20}
+				<img src="/images/kiter_18.png" alt="Kiteboarder" class="kiter-image">
+			{:else if recommendedKiteSize > 20}
+				<img src="/images/kiter_24.png" alt="Kiteboarder" class="kiter-image">
+			{/if}
 		</div>
 		
-		{#if recommendedKiteSize !== null}
+		{#if recommendedKiteSize !== null && recommendedKiteSize > 0}
 			<p class="result">{$_('result', { values: { size: recommendedKiteSize } })}</p>
+		{:else if recommendedKiteSize === -1}
+			<p class="result">{$_('result_no_kite')}</p>
 		{/if}
 	</main>
 {/if}
@@ -123,22 +142,25 @@
 
 	.language-switcher {
 		position: fixed;
-		top: 10px;
+		top: -40px;
 		left: 10px;
+		transition: all 0.3s ease;
+	}
+
+	.language-switcher:hover {
+		transform: translateY(5px);
 	}
 
 	.language-switcher button {
-		margin-left: 5px;
-		padding: 5px 10px;
+		padding: 20px 20px 10px;
 		background-color: #ffffff;
-		border: 1px solid #008080;
-		border-radius: 4px;
+		border-top: none;
+		border-radius: 50%;
 		cursor: pointer;
-	}
-
-	.language-switcher button:hover {
-		background-color: #008080;
-		color: #ffffff;
+		display: flex;
+		align-items: flex-end;
+		justify-content: center;
+		height: 75px;
 	}
 
 	h1 {
