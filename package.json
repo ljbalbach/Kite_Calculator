@@ -6,6 +6,7 @@
   "homepage": "https://ljbalbach.github.io/Kite_Calculator",
   "scripts": {
     "build": "rollup -c",
+    "deploy": "npm run build && gh-pages -d public",
     "dev": "rollup -c -w",
     "start": "sirv public --no-clear"
   },

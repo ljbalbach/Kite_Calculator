@@ -39,6 +39,10 @@ export default {
 		dir: 'public/build/',
 		entryFileNames: '[name].js',
 		chunkFileNames: '[name]-[hash].js',
+		file: 'public/build/bundle.js',
+		paths: {
+			'svelte': 'https://unpkg.com/svelte/internal'
+		}
 	},
 	plugins: [
 		json(),
