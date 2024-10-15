@@ -117,7 +117,7 @@
 		display: flex;
 		flex-direction: column;
 		overflow: hidden;
-		background-image: url('/images/beach.jpeg');
+		background-image: url('./images/beach.jpeg');
 		background-size: 1920px auto; /* Fixed width of 1920px, height auto */
 		background-position: center;
 		background-repeat: no-repeat;
