@@ -305,15 +305,15 @@
     .image-container {
         position: absolute;
         top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
+        right: 0;
+        transform: translateY(-50%);
         z-index: -1;
     }
     .kiter-image {
         width: 20rem;
-        bottom:1rem;
-        left: 2rem;
-        transform: translateY(40%) translateX(100%);
+        bottom: 1rem;
+        right: 2rem;
+        transform: translateY(40%);
     }
 
     @media (min-width: 640px) {
