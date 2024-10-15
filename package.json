@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
+  "homepage": "https://ljbalbach.github.io/Kite_Calculator",
   "scripts": {
     "build": "rollup -c",
     "dev": "rollup -c -w",
