@@ -1,2 +1,0 @@
-var e="Welcome to the Kite Calculator!",t="Find the perfect kite size and get on the water!",i="Weight (lbs)",l="Wind Speed (mph)",s="Calculate",d="Recommended kite size: {size} m²",n="You should consider using a windsurfer in these conditions!",a={title:e,subtitle:t,weight:i,windSpeed:l,calculate:s,result:d,result_no_kite:n};export{s as calculate,a as default,d as result,n as result_no_kite,t as subtitle,e as title,i as weight,l as windSpeed};
-//# sourceMappingURL=en-4ecb2fdf.js.map

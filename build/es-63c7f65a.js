@@ -1,2 +1,0 @@
-var e="¡Bienvenido a la Calculadora de Cometas!",a="¡Encuentra el tamaño perfecto de cometa y ve al agua!",t="Peso (lbs)",l="Velocidad del viento (mph)",o="Calcular",d="Tamaño de cometa recomendado: {size} m²",i="¡Deberías considerar utilizar una tabla de windsurf en estas condiciones!",n={title:e,subtitle:a,weight:t,windSpeed:l,calculate:o,result:d,result_no_kite:i};export{o as calculate,n as default,d as result,i as result_no_kite,a as subtitle,e as title,t as weight,l as windSpeed};
-//# sourceMappingURL=es-63c7f65a.js.map
