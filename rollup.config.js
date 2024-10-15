@@ -35,14 +35,8 @@ export default {
 	output: {
 		sourcemap: true,
 		format: 'es',
-		name: 'app',
 		dir: 'public/build/',
-		entryFileNames: '[name].js',
-		chunkFileNames: '[name]-[hash].js',
-		file: 'public/build/bundle.js',
-		paths: {
-			'svelte': 'https://unpkg.com/svelte/internal'
-		}
+		chunkFileNames: '[name]-[hash].js'
 	},
 	plugins: [
 		json(),
@@ -55,7 +49,6 @@ export default {
 		resolve({
 			browser: true,
 			dedupe: ['svelte'],
-			exportConditions: ['svelte']
 		}),
 		commonjs(),
 		!production && serve(),
