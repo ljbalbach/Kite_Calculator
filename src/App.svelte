@@ -110,6 +110,11 @@
 {/if}
 
 <style>
+	@font-face {
+        font-family: 'Comic Sans MS';
+        src: url("../fonts/comici.ttf") format('truetype');
+    }
+
 	:global(body) {
 		margin: 0;
 		padding: 0;
@@ -122,7 +127,7 @@
 		background-position: center;
 		background-repeat: no-repeat;
 		background-attachment: fixed; /* Keep the background fixed while scrolling */
-		font-family: 'Comic Sans MS', cursive;
+		font-family: 'Comic Sans MS', sans-serif;
 	}
 
 	main {
