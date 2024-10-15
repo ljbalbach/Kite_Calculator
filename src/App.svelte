@@ -50,41 +50,48 @@
 </script>
 
 {#if !$isLoading}
-	<main>
-		<div class="language-switcher">
-			<button on:click={switchLanguage}>
-				{$locale === 'en' ? 'Español' : 'English'}
-			</button>
-		</div>
+	<div class="scrollable-container">
+		<main>
+			<div class="language-switcher">
+				<button on:click={switchLanguage}>
+					{$locale === 'en' ? 'Español' : 'English'}
+				</button>
+			</div>
 
-		<h1>{$_('title')}</h1>
-		<p>{$_('subtitle')}</p>
-		
-		<div class="input-container">
-			<label>
-				{$_('weight')}:
-				<div class="input-wrapper">
-					<input type="number" bind:value={weight} min="0" step="10">
-					<div class="input-arrows">
-						<button class="arrow-up" on:click={() => weight += 10}>▲</button>
-						<button class="arrow-down" on:click={() => weight -= 10}>▼</button>
+			<h1>{$_('title')}</h1>
+			<p>{$_('subtitle')}</p>
+			
+			<div class="input-container">
+				<label>
+					{$_('weight')}:
+					<div class="input-wrapper">
+						<input type="number" bind:value={weight} min="0" step="10">
+						<div class="input-arrows">
+							<button class="arrow-up" on:click={() => weight += 10}>▲</button>
+							<button class="arrow-down" on:click={() => weight -= 10}>▼</button>
+						</div>
 					</div>
-				</div>
-			</label>
-			<label>
-				{$_('windSpeed')}:
-				<div class="input-wrapper">
-					<input type="number" bind:value={windSpeed} min="0" step="1">
-					<div class="input-arrows">
-						<button class="arrow-up" on:click={() => windSpeed += 1}>▲</button>
-						<button class="arrow-down" on:click={() => windSpeed -= 1}>▼</button>
+				</label>
+				<label>
+					{$_('windSpeed')}:
+					<div class="input-wrapper">
+						<input type="number" bind:value={windSpeed} min="0" step="1">
+						<div class="input-arrows">
+							<button class="arrow-up" on:click={() => windSpeed += 1}>▲</button>
+							<button class="arrow-down" on:click={() => windSpeed -= 1}>▼</button>
+						</div>
 					</div>
-				</div>
-			</label>
-			<button on:click={calculateKiteSize} class="cloud-button">
-				{$_('calculate')}
-			</button>
-		</div>
+				</label>
+				<button on:click={calculateKiteSize} class="cloud-button">
+					{$_('calculate')}
+				</button>
+			</div>
+			{#if recommendedKiteSize !== null && recommendedKiteSize > 0}
+				<p class="result">{$_('result', { values: { size: recommendedKiteSize } })}</p>
+			{:else if recommendedKiteSize === -1}
+				<p class="result">{$_('result_no_kite')}</p>
+			{/if}
+		</main>
 		<div class="image-container">
 			{#if recommendedKiteSize === null}
 				<img src="./images/kiter_12.png" alt="Kiteboarder" class="kiter-image">
@@ -100,13 +107,7 @@
 				<img src="./images/kiter_24.png" alt="Kiteboarder" class="kiter-image">
 			{/if}
 		</div>
-		
-		{#if recommendedKiteSize !== null && recommendedKiteSize > 0}
-			<p class="result">{$_('result', { values: { size: recommendedKiteSize } })}</p>
-		{:else if recommendedKiteSize === -1}
-			<p class="result">{$_('result_no_kite')}</p>
-		{/if}
-	</main>
+	</div>
 {/if}
 
 <style>
@@ -121,13 +122,18 @@
 		height: 100vh;
 		display: flex;
 		flex-direction: column;
-		overflow: hidden;
+		overflow-x: hidden;
+		overflow-y: auto;
 		background-image: url('../images/beach.jpeg');
 		background-size: 1920px auto; /* Fixed width of 1920px, height auto */
-		background-position: center;
+		background-position: center -400px;
 		background-repeat: no-repeat;
-		background-attachment: fixed; /* Keep the background fixed while scrolling */
 		font-family: 'Comic Sans MS', sans-serif;
+	}
+
+	.scrollable-container {
+		flex-grow: 1;
+		position: relative;
 	}
 
 	main {
@@ -304,16 +310,18 @@
 
     .image-container {
         position: absolute;
-        top: 50%;
-        right: 0;
-        transform: translateY(-50%);
-        z-index: -1;
-    }
-    .kiter-image {
+        top: 300px;
+        right: 14%;
         width: 20rem;
-        bottom: 1rem;
-        right: 2rem;
-        transform: translateY(40%);
+        height: 20rem;
+        pointer-events: none;
+        z-index: -2;
+    }
+
+    .kiter-image {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
     }
 
     @media (min-width: 640px) {
