@@ -6,7 +6,6 @@ import resolve from '@rollup/plugin-node-resolve';
 import livereload from 'rollup-plugin-livereload';
 import json from '@rollup/plugin-json';
 import css from 'rollup-plugin-css-only';
-import adapter from '@sveltejs/adapter-static';
 
 const production = !process.env.ROLLUP_WATCH;
 
@@ -40,12 +39,6 @@ export default {
 		dir: 'public/build/',
 		entryFileNames: '[name].js',
 		chunkFileNames: '[name]-[hash].js',
-	},
-	kit: {
-		adapter: adapter(),
-		paths: {
-			base: '/Kite_Calculator'
-		}
 	},
 	plugins: [
 		json(),
